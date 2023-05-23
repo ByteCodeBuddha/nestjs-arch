@@ -9,6 +9,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "docker:compose:create": "docker compose create",
+    "docker:compose:up": "docker compose up -d",
     "prisma:dev:deploy": "prisma migrate deploy",
     "prisma:dev:migrate": "prisma migrate dev",
     "prisma:dev:push": "prisma db push",

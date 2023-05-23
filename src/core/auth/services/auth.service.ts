@@ -185,14 +185,15 @@ export class AuthService {
       throw new ForbiddenException(
         'Access Denied',
       );
-
     const rtMatches = await argon.verify(
       user.refreshToken,
       rt,
     );
+    console.log(rtMatches);
+
     if (!rtMatches)
       throw new ForbiddenException(
-        'Access Denied',
+        'Invalid Token',
       );
 
     const tokens = await this.getTokens(user);

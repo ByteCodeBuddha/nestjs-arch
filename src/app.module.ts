@@ -8,6 +8,7 @@ import { PrismaModule } from './core/database/mysql/prisma/prisma.module';
 import { UserModule } from './modules/user/user.module';
 import {
   APP_GUARD,
+  APP_INTERCEPTOR,
   APP_PIPE,
 } from '@nestjs/core';
 
@@ -19,6 +20,8 @@ import { SecurityLoggerService } from './common/services/security-logger.service
 import { SecurityMonitoringMiddleware } from './common/middlewares';
 import { RateLimiterMiddleware } from './common/middlewares';
 import { FileLoggerService } from './common/services';
+import { ApiResponseFormat } from './common/decorators';
+import { ApiResponseInterceptor } from './common/interceptors/api-response.interceptor';
 
 @Module({
   imports: [
@@ -38,6 +41,10 @@ import { FileLoggerService } from './common/services';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ApiResponseInterceptor,
     },
     FileLoggerService,
     SecurityLoggerService,
