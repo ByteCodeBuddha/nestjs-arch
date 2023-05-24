@@ -10,6 +10,7 @@ import {
 } from 'passport-jwt';
 import { JwtPayload } from '../types';
 import { AuthService } from '../services';
+import { RequestParamsProvider } from 'src/common/util/utils';
 
 @Injectable()
 export class JwtAccessTokenStrategy extends PassportStrategy(
@@ -17,8 +18,9 @@ export class JwtAccessTokenStrategy extends PassportStrategy(
   'jwt',
 ) {
   constructor(
-    config: ConfigService,
-    private authService: AuthService,
+    private readonly config: ConfigService,
+    private readonly authService: AuthService,
+    private readonly requestParamsProvider: RequestParamsProvider,
   ) {
     super({
       jwtFromRequest:
@@ -30,6 +32,10 @@ export class JwtAccessTokenStrategy extends PassportStrategy(
   }
 
   async validate(payload: JwtPayload) {
+    const requestIP =
+      this.requestParamsProvider.getIP();
+    const userAgent =
+      this.requestParamsProvider.getUserAgent();
     const user =
       await this.authService.getUserSession(
         payload.sub,
@@ -37,17 +43,13 @@ export class JwtAccessTokenStrategy extends PassportStrategy(
 
     if (!user) {
       throw new UnauthorizedException();
+    } else if (
+      (this.config.get('SSO') === 'true' &&
+        user.ip !== requestIP) ||
+      user.userAgent !== userAgent
+    ) {
+      throw new UnauthorizedException();
     }
     return payload;
-  }
-
-  private getRequestIp(): string {
-    // Access the request IP here
-    // You can use any method or module to obtain the request IP
-    // For example, if you are using Express, you can use:
-    // return request.ip;
-
-    // Replace the following line with your actual implementation
-    return '::ffff:127.0.0.1';
   }
 }

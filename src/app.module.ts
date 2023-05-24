@@ -13,21 +13,41 @@ import {
   APP_GUARD,
   APP_PIPE,
 } from '@nestjs/core';
-
 import { ValidationPipe } from './common/pipes';
 import { RedisModule } from './core/database/inmemory/redis/redis.module';
 import { AuthModule } from './core/auth/auth.module';
 import { JwtAuthGuard } from './core/auth/guards';
 import { SecurityLoggerService } from './common/services/security-logger.service';
-import { SecurityMonitoringMiddleware } from './common/middlewares';
+import {
+  RequestMiddleware,
+  SecurityMonitoringMiddleware,
+} from './common/middlewares';
 import { RateLimiterMiddleware } from './common/middlewares';
 import { FileLoggerService } from './common/services';
 import {
   ThrottlerGuard,
   ThrottlerModule,
 } from '@nestjs/throttler';
+import { RequestParamsProvider } from './common/util/utils';
 
 @Module({
+  providers: [
+    RequestParamsProvider,
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+    FileLoggerService,
+    SecurityLoggerService,
+  ],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
@@ -45,30 +65,19 @@ import {
     AuthModule,
     UserModule,
   ],
-  providers: [
-    {
-      provide: APP_PIPE,
-      useClass: ValidationPipe,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: ThrottlerGuard,
-    },
-    FileLoggerService,
-    SecurityLoggerService,
-  ],
+  exports: [RequestParamsProvider],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RequestMiddleware)
+      .forRoutes('*');
     consumer
       .apply(SecurityMonitoringMiddleware)
       .forRoutes('*');
     consumer
       .apply(RateLimiterMiddleware)
       .forRoutes('*');
+    // Add other middleware registrations here
   }
 }

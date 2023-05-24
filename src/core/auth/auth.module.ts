@@ -6,11 +6,13 @@ import {
   JwtAccessTokenStrategy,
   JwtRefreshTokenStrategy,
 } from './strategy';
+import { RequestParamsProvider } from 'src/common/util/utils';
 
 @Module({
   imports: [JwtModule.register({})],
   controllers: [AuthController],
   providers: [
+    RequestParamsProvider,
     AuthService,
     JwtAccessTokenStrategy,
     JwtRefreshTokenStrategy,
