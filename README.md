@@ -156,6 +156,99 @@ The project provides additional scripts for various purposes:
 
 Feel free to explore the project and make any necessary modifications according to your needs.
 
+# Project Directory Structure
+
+```
+.
+├── doc
+├── prisma
+│   └── migrations
+│       ├── 20230521132419_
+│       └── 20230521193518_
+├── scripts
+├── security-events
+└── src
+    ├── common
+    │   ├── constants
+    │   ├── decorators
+    │   ├── exceptions
+    │   ├── filters
+    │   ├── interceptors
+    │   ├── interfaces
+    │   ├── middlewares
+    │   ├── pipes
+    │   ├── services
+    │   └── util
+    │       ├── email
+    │       └── sms
+    ├── config
+    ├── core
+    │   ├── auth
+    │   │   ├── controllers
+    │   │   ├── dto
+    │   │   ├── guards
+    │   │   ├── services
+    │   │   ├── strategy
+    │   │   └── types
+    │   ├── cache
+    │   ├── database
+    │   │   ├── inmemory
+    │   │   │   └── redis
+    │   │   └── mysql
+    │   │       └── prisma
+    │   └── logger
+    └── modules
+        ├── sample-module
+        │   ├── controllers
+        │   ├── dto
+        │   ├── interfaces
+        │   ├── repositories
+        │   ├── services
+        │   └── validators
+        └── user
+            ├── dto
+            └── interfaces
+```
+
+## Directory Structure Explanation
+
+- **doc**: Contains documentation related to the project.
+
+- **prisma**: Contains Prisma-related files and directories.
+  - **migrations**: Stores Prisma database migration files.
+
+- **scripts**: Holds scripts and utility files for the project.
+
+- **security-events**: Stores security-related event files.
+
+- **src**: Contains the main source code of the project.
+  - **common**: Houses common utility, constants, decorators, exceptions, filters, interceptors, interfaces, middlewares, pipes, and services used throughout the project.
+    - **util**: Contains utility files for email and SMS functionalities.
+  - **config**: Stores configuration files for the project.
+  - **core**: Contains core modules and functionality.
+    - **auth**: Handles authentication-related modules and functionality.
+      - **controllers**: Contains controllers for authentication.
+      - **dto**: Holds data transfer objects (DTOs) for authentication.
+      - **guards**: Implements guards for authentication.
+      - **services**: Provides services for authentication.
+      - **strategy**: Contains different authentication strategies.
+      - **types**: Defines types related to authentication.
+    - **cache**: Handles caching functionality.
+    - **database**: Manages database-related modules.
+      - **inmemory**: Handles in-memory database functionality.
+        - **redis**: Contains Redis-related functionality for in-memory database.
+      - **mysql**: Handles MySQL database functionality.
+        - **prisma**: Contains Prisma-related files for the MySQL database.
+    - **logger**: Implements logging functionality.
+  - **modules**: Contains different modules of the project.
+    - **sample-module**: Represents a sample module with its own controllers, DTOs, interfaces, repositories, services, and validators.
+    - **user**: Represents the user module with its own DTOs and interfaces.
+
+- **test**: Contains test files and directories for the project.
+
+This directory structure provides a modular organization for your Nest.js project, separating different functionalities and components into their respective directories. It helps maintain a clean and organized code
+
+
 ## Contributing
 
 If you'd like to contribute to the project, please follow these guidelines:
