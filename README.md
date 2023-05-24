@@ -22,52 +22,150 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Starter Repository
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+# NestJS-arch
+
+NestJS arch is an open-source application that provides a secure and scalable architecture. The project leverages various technologies such as Docker, different JWT strategies, Prisma ORM, request/response tracking, database logging, Redis for storing hashed access tokens, refresh token mechanism, storing refresh tokens in the database, IP-based single sign-on, CORS, Helmet for security, custom header middlewares, and maximum login attempts enforcement.
+
+## Description
+
+The Project Name aims to simplify the management and security of electronic health records (EHR) through a robust and extensible application. It utilizes Docker containers to provide an isolated and scalable environment for the application and its dependencies.
+
+The project incorporates different JWT (JSON Web Token) strategies for authentication and authorization. It supports access token and refresh token mechanisms, with access tokens being securely hashed and stored in Redis. Refresh tokens are securely stored in the database, allowing for efficient token revocation and renewal.
+
+To enhance security, IP-based single sign-on is implemented, ensuring that users can access their accounts only from trusted IP addresses. The project also implements various security measures such as CORS (Cross-Origin Resource Sharing) and Helmet middleware to mitigate common security vulnerabilities.
+
+Request and response tracking is implemented to log incoming and outgoing requests, providing valuable insights and troubleshooting capabilities. Additionally, database logging is enabled, allowing for detailed tracking and analysis of database transactions.
+
+The project integrates Prisma ORM for database management, providing an intuitive and efficient interface for working with the underlying database. Prisma migrations are used to manage database schema changes and ensure consistency across different environments.
+
+In addition to the aforementioned features, the project includes custom header middlewares for fine-grained control over HTTP headers, as well as enforcing maximum login attempts to protect against brute-force attacks.
+
+## Key Features
+
+- Docker containerization for scalability and isolation
+- Different JWT strategies for authentication and authorization
+- Prisma ORM for efficient database management
+- Request and response tracking for logging and troubleshooting
+- Database logging for comprehensive transaction analysis
+- Redis for secure storage of hashed access tokens
+- Refresh token mechanism with secure storage in the database
+- IP-based single sign-on for enhanced security
+- CORS and Helmet middleware for security measures
+- Custom header middlewares for flexible HTTP header control
+- Maximum login attempts enforcement to protect against brute-force attacks
+
 ## Installation
 
-```bash
-$ yarn install
+To get started with the project, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/ByteCodeBuddha/nestjs-arch.git`
+2. Navigate to the project directory: `cd nestjs-arch`
+3. Install dependencies: `yarn install`
+
+## Configuration
+
+The project requires some configuration to work properly. Follow these steps to set up the configuration:
+
+1. Create a `.env` file in the project root directory.
+2. Fill in the necessary environment variables in the `.env` file based on your requirements. Here's an example:
+
+```dotenv
+# Environment
+NODE_ENV=development
+
+# Database
+DATABASE_URL="postgresql://postgres:admin@123@localhost:5432/ehr?schema=public"
+
+# Redis
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# JWT
+JWT_ACCESS_TOKEN_SECRET=123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU
+JWT_REFRESH_TOKEN_SECRET=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU123456789
+
+# SSO
+SSO=true
+
+# Logging
+DB_LOGGING=true
+REQUEST_RESPONSE_LOGGING=true
+SECURITY_LOGGING=true
 ```
 
-## Running the app
+## Database Setup
 
-```bash
-# development
-$ yarn run start
+The project uses a database for data storage. Follow these steps to set up the database:
 
-# watch mode
-$ yarn run start:dev
+### Development Database
 
-# production mode
-$ yarn run start:prod
-```
+1. Start the development database: `yarn db:dev:up` <!-- Start the development database container -->
+2. Deploy the Prisma migrations for the development environment: `yarn prisma:dev:deploy` <!-- Deploy Prisma migrations for development -->
 
-## Test
+### Test Database
 
-```bash
-# unit tests
-$ yarn run test
+1. Start the test database: `yarn db:test:up` <!-- Start the test database container -->
+2. Deploy the Prisma migrations for the test environment: `yarn prisma:test:deploy` <!-- Deploy Prisma migrations for testing -->
 
-# e2e tests
-$ yarn run test:e2e
+## Usage
 
-# test coverage
-$ yarn run test:cov
-```
+To start the project, use the following commands:
 
-## Support
+- Start the project in development mode: `yarn start:dev` <!-- Start the project in development mode -->
+- Start the project in debug mode: `yarn start:debug` <!-- Start the project in debug mode -->
+- Start the project in production mode: `yarn start:prod` <!-- Start the project in production mode -->
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Testing
 
-## Stay in touch
+The project includes a comprehensive test suite. Use the following commands for testing:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Run all tests: `yarn test` <!-- Run all tests -->
+- Run tests in watch mode: `yarn test:watch` <!-- Run tests in watch mode -->
+- Generate test coverage report: `yarn test:cov` <!-- Generate test coverage report -->
+- Debug tests: `yarn test:debug` <!-- Debug tests -->
+- Run end-to-end tests: `yarn test:e2e` <!-- Run end-to-end tests -->
+
+## Code Formatting and Linting
+
+The project includes code formatting and linting tools. Use the following commands for formatting and linting:
+
+- Format code using Prettier: `yarn format` <!-- Format code using Prettier -->
+- Lint code using ESLint: `yarn lint` <!-- Lint code using ESLint -->
+
+## Other Scripts
+
+The project provides additional scripts for various purposes:
+
+- Build the project: `yarn build` <!-- Build the project -->
+- Deploy Prisma migrations for the development environment: `yarn prisma:dev:deploy` <!-- Deploy Prisma migrations for development -->
+- Migrate the development database: `yarn prisma:dev:migrate` <!-- Migrate development database -->
+- Push changes to the development database: `yarn prisma:dev:push` <!-- Push changes to development database -->
+- Pull changes from the development database: `yarn prisma:dev:pull` <!-- Pull changes from development database -->
+
+- Remove the development database container: `yarn db:dev:rm` <!-- Remove development database container -->
+- Restart the development database: `yarn db:dev:restart` <!-- Restart development database -->
+- Deploy Prisma migrations for the test environment: `yarn prisma:test:deploy` <!-- Deploy Prisma migrations for testing -->
+- Push changes to the test database: `yarn prisma:test:push` <!-- Push changes to test database -->
+- Pull changes from the test database: `yarn prisma:test:pull` <!-- Pull changes from test database -->
+- Remove the test database container: `yarn db:test:rm` <!-- Remove test database container -->
+- Restart the test database: `yarn db:test:restart` <!-- Restart test database -->
+
+Feel free to explore the project and make any necessary modifications according to your needs.
+
+## Contributing
+
+If you'd like to contribute to the project, please follow these guidelines:
+
+1. Fork the repository on GitHub.
+2. Create a new branch from the `master` branch.
+3. Make your changes and commit them with descriptive messages.
+4. Push your changes to your forked repository.
+5. Submit a pull request to the `master` branch of the main repository.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
