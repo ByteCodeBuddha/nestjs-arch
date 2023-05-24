@@ -22,13 +22,41 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Starter Repository
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-# Project Name
+# NestJS-arch
 
-NestJS Production ready architecture with pre configured security implementations,
+NestJS arch is an open-source application that provides a secure and scalable architecture. The project leverages various technologies such as Docker, different JWT strategies, Prisma ORM, request/response tracking, database logging, Redis for storing hashed access tokens, refresh token mechanism, storing refresh tokens in the database, IP-based single sign-on, CORS, Helmet for security, custom header middlewares, and maximum login attempts enforcement.
+
+## Description
+
+The Project Name aims to simplify the management and security of electronic health records (EHR) through a robust and extensible application. It utilizes Docker containers to provide an isolated and scalable environment for the application and its dependencies.
+
+The project incorporates different JWT (JSON Web Token) strategies for authentication and authorization. It supports access token and refresh token mechanisms, with access tokens being securely hashed and stored in Redis. Refresh tokens are securely stored in the database, allowing for efficient token revocation and renewal.
+
+To enhance security, IP-based single sign-on is implemented, ensuring that users can access their accounts only from trusted IP addresses. The project also implements various security measures such as CORS (Cross-Origin Resource Sharing) and Helmet middleware to mitigate common security vulnerabilities.
+
+Request and response tracking is implemented to log incoming and outgoing requests, providing valuable insights and troubleshooting capabilities. Additionally, database logging is enabled, allowing for detailed tracking and analysis of database transactions.
+
+The project integrates Prisma ORM for database management, providing an intuitive and efficient interface for working with the underlying database. Prisma migrations are used to manage database schema changes and ensure consistency across different environments.
+
+In addition to the aforementioned features, the project includes custom header middlewares for fine-grained control over HTTP headers, as well as enforcing maximum login attempts to protect against brute-force attacks.
+
+## Key Features
+
+- Docker containerization for scalability and isolation
+- Different JWT strategies for authentication and authorization
+- Prisma ORM for efficient database management
+- Request and response tracking for logging and troubleshooting
+- Database logging for comprehensive transaction analysis
+- Redis for secure storage of hashed access tokens
+- Refresh token mechanism with secure storage in the database
+- IP-based single sign-on for enhanced security
+- CORS and Helmet middleware for security measures
+- Custom header middlewares for flexible HTTP header control
+- Maximum login attempts enforcement to protect against brute-force attacks
 
 ## Installation
 
