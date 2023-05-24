@@ -3,7 +3,10 @@ import {
   Module,
   NestModule,
 } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import {
+  ConfigModule,
+  ConfigService,
+} from '@nestjs/config';
 import { PrismaModule } from './core/database/mysql/prisma/prisma.module';
 import { UserModule } from './modules/user/user.module';
 import {
@@ -19,11 +22,23 @@ import { SecurityLoggerService } from './common/services/security-logger.service
 import { SecurityMonitoringMiddleware } from './common/middlewares';
 import { RateLimiterMiddleware } from './common/middlewares';
 import { FileLoggerService } from './common/services';
+import {
+  ThrottlerGuard,
+  ThrottlerModule,
+} from '@nestjs/throttler';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        ttl: config.get('THROTTLE_TTL'),
+        limit: config.get('THROTTLE_LIMIT'),
+      }),
     }),
     PrismaModule,
     RedisModule,
@@ -38,6 +53,10 @@ import { FileLoggerService } from './common/services';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
     FileLoggerService,
     SecurityLoggerService,

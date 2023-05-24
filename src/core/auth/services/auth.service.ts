@@ -23,7 +23,11 @@ export class AuthService {
     private configService: ConfigService,
   ) {}
 
-  async signUp(dto: AuthDto): Promise<Tokens> {
+  async signUp(
+    dto: AuthDto,
+    ip: string,
+    userAgent: string | undefined,
+  ): Promise<Tokens> {
     const hash = await argon.hash(dto.password);
 
     let user = await this.prisma.user.findUnique({
@@ -70,6 +74,8 @@ export class AuthService {
     userSession = {
       userId: user.id,
       token: accessTokenHash,
+      ip,
+      userAgent,
     };
     await this.saveUserSession(userSession);
 
@@ -79,7 +85,11 @@ export class AuthService {
     };
   }
 
-  async signIn(dto: AuthDto): Promise<Tokens> {
+  async signIn(
+    dto: AuthDto,
+    ip: string,
+    userAgent: string | undefined,
+  ): Promise<Tokens> {
     const user =
       await this.prisma.user.findUnique({
         where: {
@@ -115,6 +125,8 @@ export class AuthService {
     userSession = {
       userId: user.id,
       token: accessTokenHash,
+      ip,
+      userAgent,
     };
     await this.saveUserSession(userSession);
     return {
@@ -174,6 +186,8 @@ export class AuthService {
   async refreshTokens(
     userId: number,
     rt: string,
+    ip: string,
+    userAgent: string | undefined,
   ): Promise<Tokens> {
     const user =
       await this.prisma.user.findUnique({
@@ -209,6 +223,8 @@ export class AuthService {
     userSession = {
       userId: user.id,
       token: accessTokenHash,
+      ip,
+      userAgent,
     };
     await this.saveUserSession(userSession);
 
@@ -287,10 +303,13 @@ export class AuthService {
     try {
       const value = await redisClient.get(key);
       if (value) {
-        const { token } = JSON.parse(value);
+        const { token, ip, userAgent } =
+          JSON.parse(value);
         const userSession: UserSessionDto = {
           token: token,
           userId: userId,
+          ip: ip,
+          userAgent: userAgent,
         };
         return userSession;
       }

@@ -34,9 +34,20 @@ export class JwtAccessTokenStrategy extends PassportStrategy(
       await this.authService.getUserSession(
         payload.sub,
       );
+
     if (!user) {
       throw new UnauthorizedException();
     }
     return payload;
+  }
+
+  private getRequestIp(): string {
+    // Access the request IP here
+    // You can use any method or module to obtain the request IP
+    // For example, if you are using Express, you can use:
+    // return request.ip;
+
+    // Replace the following line with your actual implementation
+    return '::ffff:127.0.0.1';
   }
 }

@@ -1,3 +1,9 @@
 {
-  "cSpell.words": ["datasources", "inmemory"]
+  "cSpell.words": [
+    "datasources",
+    "frameguard",
+    "hsts",
+    "inmemory",
+    "signin"
+  ]
 }

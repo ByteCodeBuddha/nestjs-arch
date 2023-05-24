@@ -19,7 +19,10 @@ export class HeaderInterceptor
       .getResponse();
 
     // Add headers to the response
-    response.header('Custom-Header', 'Value');
+    response.header(
+      'X-XSS-Protection',
+      '1; mode=block',
+    );
 
     return next.handle();
   }
