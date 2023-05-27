@@ -32,7 +32,7 @@ NestJS arch is an open-source application that provides a secure and scalable ar
 
 ## Description
 
-The Project Name aims to simplify the management and security of electronic health records (EHR) through a robust and extensible application. It utilizes Docker containers to provide an isolated and scalable environment for the application and its dependencies.
+The Project aims to simplify the management and security  through a robust and extensible application. It utilizes Docker containers to provide an isolated and scalable environment for the application and its dependencies.
 
 The project incorporates different JWT (JSON Web Token) strategies for authentication and authorization. It supports access token and refresh token mechanisms, with access tokens being securely hashed and stored in Redis. Refresh tokens are securely stored in the database, allowing for efficient token revocation and renewal.
 
